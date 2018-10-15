@@ -8,7 +8,7 @@ To install this adapter run this command:
 
 `npm install @frctl/twig`
 
-than open your fractial.js file and add following lines:
+then open your fractal.js file and add following lines:
 
 ```
 /*
