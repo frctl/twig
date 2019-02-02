@@ -18,3 +18,14 @@ const twigAdapter = require('@frctl/twig')();
 fractal.components.engine(twigAdapter);
 fractal.components.set('ext', '.twig');
 ```
+
+## Using external plugins
+```
+const twigMarkdown = require('twig-markdown');
+const twigAdapter = require('@frctl/twig')({
+    plugins: {
+        twigMarkdown
+    }
+});
+
+```
