@@ -209,9 +209,6 @@ module.exports = function(config) {
             _.each(config.tests || {}, function(test, name){
                 Twig.extendTest(name, test);
             });
-            _.each(config.plugins || {}, function(plugin){
-                Twig.extend(plugin);
-            });
             Twig.extend(function(Twig) {
                 _.each(config.tags || {}, function(tag){
                     Twig.exports.extendTag(tag(Twig));

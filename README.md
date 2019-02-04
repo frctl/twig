@@ -22,10 +22,9 @@ fractal.components.set('ext', '.twig');
 ## Using external plugins
 ```
 const twigMarkdown = require('twig-markdown');
-const twigAdapter = require('@frctl/twig')({
-    plugins: {
-        twigMarkdown
-    }
-});
+const instance = fractal.components.engine(twigAdapter);
+
+// instance.twig refers to the twig.js instance
+instance.twig.instance.twig.extend(twigMarkdown);
 
 ```
