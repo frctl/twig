@@ -25,6 +25,6 @@ const twigMarkdown = require('twig-markdown');
 const instance = fractal.components.engine(twigAdapter);
 
 // instance.twig refers to the twig.js instance
-instance.twig.instance.twig.extend(twigMarkdown);
+instance.twig.extend(twigMarkdown);
 
 ```
