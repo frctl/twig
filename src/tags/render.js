@@ -56,7 +56,7 @@ module.exports = function (fractal) {
                 let innerContext = entity.isComponent ? entity.variants().default().getContext() : entity.getContext();
 
                 if (token.contextStack !== undefined) {
-                    _.assign(innerContext, Twig.expression.parse.apply(this, [token.contextStack, context]));
+                    _.merge(innerContext, Twig.expression.parse.apply(this, [token.contextStack, context]));
                 }
 
                 let template;
