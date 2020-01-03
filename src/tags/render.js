@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const path = require('path');
+const utils = require('@frctl/fractal').utils;
 
 /**
  * Render tag
