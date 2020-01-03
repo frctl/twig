@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
     isHandle(str, handlePrefix) {
         return str && str.startsWith(handlePrefix);
@@ -5,6 +7,6 @@ module.exports = {
     replaceHandlePrefix(handle, handlePrefix) {
         let prefixMatcher = new RegExp(`^\\${handlePrefix}`);
 
-        return handle.replace(prefixMatcher, '@')
+        return handle.replace(prefixMatcher, '@');
     },
 };
