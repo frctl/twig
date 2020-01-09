@@ -143,14 +143,15 @@ class TwigAdapter extends Fractal.Adapter {
 
         return new Promise(function(resolve, reject){
 
-            let tplPath = Path.relative(self._config.base || self._source.fullPath, path);
+            let tplPath = Path.relative(self._source.fullPath, path);
 
             try {
                 let template = self.engine.twig({
                     method: self._config.method,
                     async: false,
                     rethrow: true,
-                    name: tplPath,
+                    name: self._config.method === 'fractal' ? (meta.self ? `${self._config.handlePrefix}${meta.self.handle}` : tplPath) : undefined,
+                    path: path,
                     precompiled: str,
                     base: self._config.base,
                     strict_variables: self._config.strict_variables
