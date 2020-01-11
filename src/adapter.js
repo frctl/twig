@@ -154,7 +154,7 @@ class TwigAdapter extends Fractal.Adapter {
                     precompiled: str,
                     base: self._config.base,
                     strict_variables: self._config.strict_variables,
-                    namespaces: self._config.namespaces || {}
+                    namespaces: self._config.namespaces
                 });
                 resolve(template.render(context));
             } catch (e) {
@@ -179,7 +179,8 @@ module.exports = function(config) {
         handlePrefix: '@',
         importContext: false,
         base: null,
-        strict_variables: false
+        strict_variables: false,
+        namespaces: {}
     });
 
     return {
