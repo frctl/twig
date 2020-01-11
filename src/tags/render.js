@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const path = require('path');
+const utils = require('@frctl/fractal').utils;
 
 /**
  * Render tag
@@ -53,10 +54,10 @@ module.exports = function (fractal) {
                     throw new Error(`Could not render component '${handle}' - component not found.`);
                 }
 
-                let innerContext = entity.isComponent ? entity.variants().default().context : entity.context;
+                let innerContext = entity.isComponent ? entity.variants().default().getContext() : entity.getContext();
 
                 if (token.contextStack !== undefined) {
-                    _.assign(innerContext, Twig.expression.parse.apply(this, [token.contextStack, context]));
+                    innerContext = utils.defaultsDeep(Twig.expression.parse.apply(this, [token.contextStack, context]), innerContext);
                 }
 
                 let template;
@@ -65,7 +66,7 @@ module.exports = function (fractal) {
                     template = file;
                 }
                 else {
-                    template = this.importFile(file);
+                    template = this.template.importFile(file);
                 }
 
                 return {

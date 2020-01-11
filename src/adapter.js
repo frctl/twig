@@ -65,7 +65,7 @@ class TwigAdapter extends Fractal.Adapter {
                         let prefixMatcher = new RegExp(`^\\${self._config.handlePrefix}`);
                         let entity = source.find(handle.replace(prefixMatcher, '@'));
                         if (entity) {
-                            entity = entity.isVariant ? entity : entity.variants().default();
+                            entity = entity.isComponent ? entity.variants().default() : entity;
                             if (config.importContext) {
                                 context = utils.defaultsDeep(_.cloneDeep(context), entity.getContext());
                                 context._self = entity.toJSON();
@@ -152,6 +152,8 @@ class TwigAdapter extends Fractal.Adapter {
                     rethrow: true,
                     name: meta.self ? `${self._config.handlePrefix}${meta.self.handle}` : tplPath,
                     precompiled: str,
+                    base: self._config.base,
+                    strict_variables: self._config.strict_variables,
                     namespaces: self._config.namespaces || {}
                 });
                 resolve(template.render(context));
@@ -175,7 +177,9 @@ module.exports = function(config) {
     config = _.defaults(config || {}, {
         pristine: false,
         handlePrefix: '@',
-        importContext: false
+        importContext: false,
+        base: null,
+        strict_variables: false
     });
 
     return {

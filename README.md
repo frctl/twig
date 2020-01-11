@@ -10,7 +10,7 @@ To install this adapter run this command:
 
 then open your fractal.js file and add following lines:
 
-```
+```js
 /*
  * Require the Twig adapter
  */
@@ -19,8 +19,31 @@ fractal.components.engine(twigAdapter);
 fractal.components.set('ext', '.twig');
 ```
 
-## Extending with a custom config
+## Using Twig for docs
+
+To use Twig for docs, set the docs engine to `@frctl/twig`:
+```js
+fractal.docs.engine(twigAdapter);
 ```
+
+However, due to the way this adapter currently extends Twig, it is necessary to *set the docs engine before setting the components engine*.
+
+```js
+/*
+ * Require the Twig adapter
+ */
+const twigAdapter = require('@frctl/twig')();
+
+// first set docs engine
+fractal.docs.engine(twigAdapter);
+
+// then set components engine
+fractal.components.engine(twigAdapter);
+```
+
+
+## Extending with a custom config
+```js
 /*
  * Require the Twig adapter
  */
@@ -39,6 +62,17 @@ const twigAdapter = require('@frctl/twig')({
     // this will change your includes to {% include '%button' %}
     // default is '@'
     handlePrefix: '%',
+
+    // set a base path for twigjs
+    // Setting base to '/' will make sure all resolved render paths
+    // start at the defined components dir, instead of being relative.
+    // default is null
+    base: '/',
+
+    // should missing variable/keys emit an error message
+    // If false, they default to null.
+    // default is false
+    strict_variables: true,
 
     // register custom filters
     filters: {
@@ -120,7 +154,7 @@ const twigAdapter = require('@frctl/twig')({
 ## Using external plugins
 
 An example to use [twig-js-markdown](https://github.com/ianbytchek/twig-js-markdown):
-```
+```js
 const twigMarkdown = require('twig-markdown');
 const instance = fractal.components.engine(twigAdapter);
 
@@ -139,7 +173,7 @@ It is strongly recommended to use this filter whenever you need to link to any s
 The path argument should begin with a slash and be relative to the web root. During a static HTML export this path will then be re-written to be relative to the current page.
 
 Usage:
-```
+```twig
 {{ '/css/my-stylesheet.css'|path }}
 ```
 
@@ -149,6 +183,6 @@ Usage:
 The render tag renders a component (referenced by its handle) using the context data provided to it. If no data is provided, it will use the context data defined within the component's configuration file, if it has one.
 
 Usage:
-```
+```twig
 {% render "@component" with {some: 'values'} %}
 ```
